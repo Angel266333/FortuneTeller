@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:background="#00F"
+    android:gravity="bottom"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    >
+
+    <TextView
+        android:id="@+id/userLoggedIn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Angel Petrov"
+        android:textSize="20sp"
+        />
+    <!--Tag is to be modified when login is implemented-->
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="angelilianov@gmail.com"
+        android:textSize="20sp"
+        />
+
+
+
+</LinearLayout>
