@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+// Thanks for the tutorials and inspiration for some of the code from the user https://github.com/haroon47.
+// All credits go to their respective owners.
+
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
