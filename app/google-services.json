@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "402214175366",
+    "firebase_url": "https://fortuneteller-a3f86.firebaseio.com",
+    "project_id": "fortuneteller-a3f86",
+    "storage_bucket": "fortuneteller-a3f86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402214175366:android:0612849f8622bd66",
+        "android_client_info": {
+          "package_name": "com.angel266489.fortuneteller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402214175366-aje6tloairabrrfom92jg531mk28mi1v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.angel266489.fortuneteller",
+            "certificate_hash": "9b5888ef89e3b05f77c2a409d63c2c7561731bd0"
+          }
+        },
+        {
+          "client_id": "402214175366-435pmd99j3aobu8788il45pfvrk9guig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ-NfVPI1OPSOpaJjnaPjNwilfmL3FK1s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402214175366-435pmd99j3aobu8788il45pfvrk9guig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
