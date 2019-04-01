@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey(MainActivity.KEY)) {
+            String data = bundle.getString(MainActivity.KEY);
+
+            Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "no data received", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
