@@ -12,7 +12,8 @@
 
         <item
             android:id="@+id/wheel"
-            android:title="Spin wheel" />
+            android:title="Spin wheel"
+            />
 
         <item
             android:id="@+id/list"

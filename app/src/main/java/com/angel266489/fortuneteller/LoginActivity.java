@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 (R.string.default_web_client_id)).requestEmail().build();
         mAuth = FirebaseAuth.getInstance();
 
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)

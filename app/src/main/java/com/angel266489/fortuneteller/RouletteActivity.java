@@ -30,7 +30,7 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
         getWindow().addFlags(1024);
         requestWindowFeature(1);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.roulette_view);
+        setContentView(R.layout.activity_roulette);
 
         b_start = (Button)findViewById(R.id.buttonStart);
         b_up = (Button)findViewById(R.id.buttonUp);
