@@ -15,7 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
@@ -24,8 +23,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private final static String KEY = "";
 
     private static final int RC_SIGN_IN = 2600;
-
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString
                 (R.string.default_web_client_id)).requestEmail().build();
-        mAuth = FirebaseAuth.getInstance();
+
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -75,9 +72,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount acc = result.getSignInAccount();
             Intent intent = new Intent(this, MainActivity.class);
             if(acc.getEmail() != null) {
-                intent.putExtra(KEY, acc.getEmail());
+                intent.putExtra(KEY, acc.getEmail() + acc.getGivenName());
             }
-            // TODO: Print toast :)
+
             startActivity(intent);
         }
     }
