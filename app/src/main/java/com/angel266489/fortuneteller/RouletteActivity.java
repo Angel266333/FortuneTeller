@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -17,13 +18,13 @@ import java.util.Random;
 public class RouletteActivity extends AppCompatActivity implements Animation.AnimationListener {
 
     boolean blnButtonRotation = true;
-    int intNumber = 6;
-    long lngDegrees =  0;
+    int position;
+    long degrees = 0;
     SharedPreferences sharedPrefererences;
 
     ImageView selected, imageRoulette;
 
-    Button b_start,b_up,b_down;
+    Button b_start, b_up, b_down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,33 +33,92 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roulette);
 
-        b_start = (Button)findViewById(R.id.buttonStart);
-        b_up = (Button)findViewById(R.id.buttonUp);
-        b_down = (Button)findViewById(R.id.buttonDown);
+        b_start = (Button) findViewById(R.id.buttonStart);
+        b_up = (Button) findViewById(R.id.buttonUp);
+        b_down = (Button) findViewById(R.id.buttonDown);
 
-        selected = (ImageView)findViewById(R.id.imageSelected);
-        imageRoulette = (ImageView)findViewById(R.id.rouletteImage);
+        selected = (ImageView) findViewById(R.id.imageSelected);
+        imageRoulette = (ImageView) findViewById(R.id.rouletteImage);
 
-        this.sharedPrefererences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.intNumber = this.sharedPrefererences.getInt("INT_NUMBER", 6);
-        setImageRoulette(this.intNumber);
+        sharedPrefererences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.position = this.sharedPrefererences.getInt("INT_NUMBER", 9);
+        Log.d("Number", "Init " + position);
+        setImageRoulette(this.position);
     }
 
     @Override
     public void onAnimationStart(Animation animation) {
+        resetPosition();
         this.blnButtonRotation = false;
         b_start.setVisibility(View.VISIBLE);
     }
 
+    private void resetPosition() {
+        imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_9));
+        position = 9;
+    }
+
     @Override
     public void onAnimationEnd(Animation animation) {
-        Toast toast = Toast.makeText(this, " " + String.valueOf((int)(((double)this.intNumber)
-                - Math.floor(((double)this.lngDegrees) / (360.0d / ((double)this.intNumber))))) + " ",Toast.LENGTH_SHORT);
-        toast.setGravity(49,0,0);
-        toast.show();
+        position = calculateSpinnedNumber();
+        String msg = convertNumberToFortune(position);
+        Toast.makeText(this, String.valueOf(position), Toast.LENGTH_LONG).show();
+
+        Log.d("Number", "" + position);
+
+        Toast toastA = Toast.makeText(this, " " + position + " " + msg, Toast.LENGTH_SHORT);
+        toastA.setGravity(49, 0, 0);
+        toastA.show();
+
         this.blnButtonRotation = true;
         b_start.setVisibility(View.VISIBLE);
+        Toast.makeText(this, String.valueOf(position), Toast.LENGTH_LONG).show();
     }
+
+    private int calculateSpinnedNumber() {
+        return (int) (((double) this.position)
+                - Math.floor(((double) this.degrees) / (360.0d / ((double) this.position))));
+    }
+
+    private String convertNumberToFortune(int number) {
+        String msg = "";
+        switch (number) {
+            case 1:
+                msg = " : You will get a 12 on all of your exams ✔️";
+                break;
+            case 2:
+                msg = " : A friend asks only for your time not your money.";
+                break;
+            case 3:
+                msg = " A smile is your passport into the hearts of others.";
+                break;
+            case 4:
+                msg = " You learn from your mistakes... You will learn a lot today.";
+                break;
+            case 5:
+                msg = " Never give up. You're not a failure if you don't give up.";
+                break;
+            case 6:
+                msg = " You will marry your lover.";
+                break;
+            case 7:
+                msg = " You already know the answer to the questions lingering inside your head.";
+                break;
+            case 8:
+                msg = " Keep your eye out for someone special.";
+                break;
+            case 9:
+                msg = " Its amazing how much good you can do if you dont care who gets the credit.";
+                break;
+            case 10:
+                msg = " Your feet are smelly";
+                break;
+            default:
+                break;
+        }
+        return msg;
+    }
+
 
     @Override
     public void onAnimationRepeat(Animation animation) {
@@ -66,13 +126,14 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
     }
 
     public void onClickButtonRotation(View v) {
-        if(this.blnButtonRotation) {
-        int ran = new Random().nextInt(360) + 3600;
-            RotateAnimation rotateAnimation = new RotateAnimation((float)this.lngDegrees, (float)
-                    (this.lngDegrees + ((long)ran)), 1,0.5f,1,0.5f);
+        if (this.blnButtonRotation) {
+            degrees = 0;
+            int ran = new Random().nextInt(360) + 3600;
+            RotateAnimation rotateAnimation = new RotateAnimation((float) this.degrees, (float)
+                    (this.degrees + ((long) ran)), 1, 0.5f, 1, 0.5f);
 
-            this.lngDegrees = (this.lngDegrees + ((long)ran)) % 360;
-            rotateAnimation.setDuration((long)ran);
+            this.degrees = (this.degrees + ((long) ran)) % 360;
+            rotateAnimation.setDuration((long) ran);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setInterpolator(new DecelerateInterpolator());
             rotateAnimation.setAnimationListener(this);
@@ -82,68 +143,68 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
     }
 
     public void buttonUp(View v) {
-        if(this.intNumber < 10) {
-            this.intNumber++;
-            setImageRoulette(this.intNumber);
+        if (this.position < 10) {
+            this.position++;
+            setImageRoulette(this.position);
             b_down.setVisibility(View.VISIBLE);
             SharedPreferences.Editor editor = this.sharedPrefererences.edit();
-            editor.putInt("INT_NUMBER", this.intNumber);
+            editor.putInt("INT_NUMBER", this.position);
             editor.commit();
         }
 
-        if(this.intNumber == 10) {
+        if (this.position == 10) {
             b_up.setVisibility(View.INVISIBLE);
         }
     }
 
     public void buttonDown(View v) {
-        if(this.intNumber > 2) {
-            intNumber--;
-            setImageRoulette(this.intNumber);
+        if (this.position > 2) {
+            position--;
+            setImageRoulette(this.position);
             b_up.setVisibility(View.VISIBLE);
 
             SharedPreferences.Editor editor = this.sharedPrefererences.edit();
-            editor.putInt("INT_NUMBER", this.intNumber);
+            editor.putInt("INT_NUMBER", this.position);
             editor.commit();
         }
-        if(this.intNumber > 2) {
+        if (this.position > 2) {
             b_down.setVisibility(View.INVISIBLE);
         }
     }
 
     private void setImageRoulette(int myNumber) {
-    switch (intNumber) {
-        case 1:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette));
-            return;
-        case 2:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_2));
-            return;
+        switch (position) {
+            case 1:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette));
+                return;
+            case 2:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_2));
+                return;
 
-        case 3:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_3));
-            return;
-        case 4:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_4));
-            return;
-        case 5:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_5));
-            return;
-        case 6:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_6));
-            return;
-        case 7:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_7));
-            return;
-        case 8:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_8));
-            return;
-        case 9:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_9));
-            return;
-        case 10:
-            imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_10));
-            return;
-    }
+            case 3:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_3));
+                return;
+            case 4:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_4));
+                return;
+            case 5:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_5));
+                return;
+            case 6:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_6));
+                return;
+            case 7:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_7));
+                return;
+            case 8:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_8));
+                return;
+            case 9:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_9));
+                return;
+            case 10:
+                imageRoulette.setImageDrawable(getResources().getDrawable(R.drawable.roulette_10));
+                return;
+        }
     }
 }
