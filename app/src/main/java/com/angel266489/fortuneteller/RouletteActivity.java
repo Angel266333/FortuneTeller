@@ -84,39 +84,40 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
         String msg = "";
         switch (number) {
             case 1:
-                msg = " : You will get a 12 on all of your exams ✔️";
+                msg = getString(R.string.wishone);
                 break;
             case 2:
-                msg = " : A friend asks only for your time not your money.";
+                msg = getString(R.string.wishtwo);
                 break;
             case 3:
-                msg = " A smile is your passport into the hearts of others.";
+                msg = getString(R.string.wishthree);
                 break;
             case 4:
-                msg = " You learn from your mistakes... You will learn a lot today.";
+                msg = getString(R.string.wishfour);
                 break;
             case 5:
-                msg = " Never give up. You're not a failure if you don't give up.";
+                msg = getString(R.string.wishfive);
                 break;
             case 6:
-                msg = " You will marry your lover.";
+                msg = getString(R.string.wishsix);
                 break;
             case 7:
-                msg = " You already know the answer to the questions lingering inside your head.";
+                msg = getString(R.string.wishseven);
                 break;
             case 8:
-                msg = " Keep your eye out for someone special.";
+                msg = getString(R.string.wisheight);
                 break;
             case 9:
-                msg = " Its amazing how much good you can do if you dont care who gets the credit.";
+                msg = getString(R.string.wishnine);
                 break;
             case 10:
-                msg = " Your feet are smelly";
+                msg = getString(R.string.wishten);
                 break;
             default:
                 break;
         }
         return msg;
+
     }
 
 
