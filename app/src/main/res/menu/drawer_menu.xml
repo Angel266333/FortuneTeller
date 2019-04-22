@@ -3,31 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showin="navigation_view">
 
-    <group android:checkableBehavior="single">
-
+    <group android:checkableBehavior="single"/>
+        <item android:title="@string/menutitle">
+        <menu>
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Home"/>
+            android:icon="@drawable/home_64dp"
+            android:title="@string/menuOne"/>
 
         <item
             android:id="@+id/wheel"
-            android:title="Spin wheel"
+            android:icon="@drawable/roulette_64dp"
+            android:title="@string/menuTwo"
             />
-
         <item
-            android:id="@+id/list"
-            android:title="Fortune history" />
+            android:id="@+id/crystalball"
+            android:icon="@drawable/crystal_ball_64dp"
+            android:title="@string/menuThree"/></menu>
+        </item>
 
-    </group>
-<item android:title="Personalize">
+    <item android:title="@string/onlinetitle">
     <menu> <item
-        android:id="@+id/nav_settings"
+        android:id="@+id/onlinewish"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Settings"/></menu>
+        android:title="@string/onlinewish"/></menu>
 </item>
-
-
-
-
 </menu>

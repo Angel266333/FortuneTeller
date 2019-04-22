@@ -12,4 +12,11 @@
     <string name="wisheight">Keep your eye out for someone special.</string>
     <string name="wishnine">Its amazing how much good you can do if you dont care who gets the credit.</string>
     <string name="wishten">Your feet are smelly.</string>
+
+    <string name="menutitle">My Menu</string>
+    <string name="menuOne">Home</string>
+    <string name="menuTwo">Spin wheel</string>
+    <string name="menuThree">Crystal ball</string>
+    <string name="onlinetitle">Get wishes online</string>
+    <string name="onlinewish">Get online wish</string>
 </resources>

@@ -1,15 +1,16 @@
 package com.angel266489.fortuneteller.database;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "wish")
 public class Wish {
     @PrimaryKey(autoGenerate = true)
-    int id;
-    String wish;
-    String email;
-    boolean favorite;
+    private int id;
+    private String wish;
+    private String email;
+    private boolean favorite;
 
     public Wish(String wish, String email, boolean favorite) {
         this.wish = wish;
@@ -70,5 +71,15 @@ public class Wish {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    @Override
+    public String toString() {
+        return "Wish{" +
+                "id=" + id +
+                ", wish='" + wish + '\'' +
+                ", email='" + email + '\'' +
+                ", favorite=" + favorite +
+                '}';
     }
 }

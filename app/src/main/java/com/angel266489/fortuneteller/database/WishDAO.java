@@ -1,13 +1,12 @@
 package com.angel266489.fortuneteller.database;
 
-import android.arch.lifecycle.LiveData;
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+
+import java.util.ArrayList;
 import java.util.List;
-
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
 
 @Dao
 public interface WishDAO {
@@ -19,5 +18,5 @@ public interface WishDAO {
     public void deleteAll();
 
     @Query("select * from wish")
-    public LiveData<List<Wish>> getAll();
+    public List<Wish> getAll();
 }
