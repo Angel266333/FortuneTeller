@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public final static String KEY_LASTNAME = "lastname";
     public final static String KEY_EMAIL = "email";
 
-
     private static final int RC_SIGN_IN = 2600;
 
     @Override
@@ -88,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
         showToast();
     }
 

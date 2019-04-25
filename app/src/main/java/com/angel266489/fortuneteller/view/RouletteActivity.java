@@ -30,7 +30,6 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
     private WishDatabase db;
 
     ImageView selected, imageRoulette;
-
     Button b_start, b_up, b_down;
 
     @Override

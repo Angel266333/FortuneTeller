@@ -21,11 +21,4 @@
             android:icon="@drawable/crystal_ball_64dp"
             android:title="@string/menuThree"/></menu>
         </item>
-
-    <item android:title="@string/onlinetitle">
-    <menu> <item
-        android:id="@+id/onlinewish"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="@string/onlinewish"/></menu>
-</item>
 </menu>

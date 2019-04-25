@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<Wish> wishes;
     private WishDAO dao;
     private static final int RC_SIGN_IN = 2600;
-    private FirebaseAuth mAuth;
     private WishDatabase db;
     private RecyclerView recyclerView;
     private ListAdapter adapter;
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // mAuth = FirebaseAuth.getInstance();
-        // Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
         wishes = new ArrayList<>();
         db = WishDatabase.getInstance(this);
 
@@ -91,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (bundle != null && bundle.containsKey(LoginActivity.KEY_FIRSTNAME)) {
             firstName = bundle.getString(LoginActivity.KEY_FIRSTNAME);
             lastName = bundle.getString(LoginActivity.KEY_LASTNAME);
+            email = bundle.getString(LoginActivity.KEY_EMAIL);
             mergedName = firstName + " " + lastName;
             userLoggedIn.setText(mergedName);
 
@@ -147,11 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.crystalball:
-                return true;
-                //TODO
-            case R.id.onlinewish:
                 Intent intentOnlineWish = new Intent(this, OnlineWishReaderActivity.class);
-                intentOnlineWish.putExtra(LoginActivity.KEY_EMAIL, email);
                 startActivity(intentOnlineWish);
         }
         return false;
@@ -185,4 +179,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return null;
         }
     }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMergedName() {
+        return mergedName;
+    }
+
+    public void setMergedName(String mergedName) {
+        this.mergedName = mergedName;
+    }
+
 }
