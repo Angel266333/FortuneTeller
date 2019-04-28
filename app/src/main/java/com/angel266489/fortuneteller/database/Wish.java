@@ -16,7 +16,6 @@ public class Wish {
         this.email = email;
     }
 
-
     public int getId() {
         return id;
     }

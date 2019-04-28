@@ -49,7 +49,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             super(itemView);
             wish = itemView.findViewById(R.id.wish);
             icon_email = itemView.findViewById(R.id.email_icon);
-            icon_star = itemView.findViewById(R.id.star_icon);
         }
 
 
