@@ -10,12 +10,10 @@ public class Wish {
     private int id;
     private String wish;
     private String email;
-    private boolean favorite;
 
-    public Wish(String wish, String email, boolean favorite) {
+    public Wish(String wish, String email) {
         this.wish = wish;
         this.email = email;
-        this.favorite = favorite;
     }
 
 
@@ -29,10 +27,6 @@ public class Wish {
 
     public String getEmail() {
         return email;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
     }
 
     public void setId(int id) {
@@ -55,7 +49,6 @@ public class Wish {
         Wish wish1 = (Wish) o;
 
         if (id != wish1.id) return false;
-        if (favorite != wish1.favorite) return false;
         if (wish != null ? !wish.equals(wish1.wish) : wish1.wish != null) return false;
         return email != null ? email.equals(wish1.email) : wish1.email == null;
     }
@@ -65,12 +58,7 @@ public class Wish {
         int result = id;
         result = 31 * result + (wish != null ? wish.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (favorite ? 1 : 0);
         return result;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
     }
 
     @Override
@@ -79,7 +67,6 @@ public class Wish {
                 "id=" + id +
                 ", wish='" + wish + '\'' +
                 ", email='" + email + '\'' +
-                ", favorite=" + favorite +
                 '}';
     }
 }

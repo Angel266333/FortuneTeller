@@ -38,15 +38,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString
                 (R.string.default_web_client_id)).requestEmail().build();
 
-
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
     }
-
 
     public void signIn(View view) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -60,7 +57,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-
         } else {
             showToast();
         }
@@ -79,11 +75,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 intent.putExtra(KEY_LASTNAME, acc.getFamilyName());
                 intent.putExtra(KEY_EMAIL, acc.getEmail());
             }
-
             startActivity(intent);
         }
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

@@ -9,30 +9,41 @@
     tools:context=".view.MainActivity"
     tools:openDrawer="start">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/AlertDialog.AppCompat.Light"
-            android:elevation="4dp"
+            android:layout_height="match_parent"
             >
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/AlertDialog.AppCompat.Light"
+                android:elevation="4dp"
+                android:layout_alignParentTop="true"
+                />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/rv"
-            />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_below="@id/toolbar"
+                android:layout_above="@id/clearBtn"
+                />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/clearBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clear"
+                android:layout_alignParentBottom="true"
+                />
+
+        </RelativeLayout>
+
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/drawer_menu"

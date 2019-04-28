@@ -1,16 +1,15 @@
 package com.angel266489.fortuneteller.view;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +22,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private List<Wish> wishes;
 
+    private String email;
+
     public ListAdapter(List<Wish> wishes) {
         this.wishes = wishes;
     }
@@ -33,13 +34,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.list_item, viewGroup, false);
         return new ViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         viewHolder.wish.setText(wishes.get(position).getWish());
-
     }
 
     public void setWishes(List<Wish> wishes){
@@ -52,64 +51,40 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return wishes.size();
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String mergedName;
-        MainActivity mainActivity;
-
-        public void setUserParams() {
-            if (!(mainActivity == null)) {
-                firstName = mainActivity.getFirstName();
-                lastName = mainActivity.getLastName();
-                email = mainActivity.getEmail();
-                mergedName = firstName + " " + lastName;
-            }
-        }
-
+        Context context;
         TextView wish;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             wish = itemView.findViewById(R.id.wish);
+            context = itemView.getContext();
 
-            ImageButton sendEmail = (ImageButton) itemView.findViewById(R.id.email_icon);
-            final String mailto = "mailto:" + email +
-                    "?cc=" + "angelilianov@gmail.com" +
-                    "&subject=" + Uri.encode("Your fortune") +
-                    "&body=" + Uri.encode("Test");
+            ImageButton sendEmail = itemView.findViewById(R.id.email_icon);
+
             sendEmail.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
+                    final String mailto = "mailto:" + email +
+                            "?cc= " +
+                            "&subject=" + Uri.encode("Your fortune") +
+                            "&body=" + Uri.encode(wish.getText().toString());
+
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                     emailIntent.setData(Uri.parse(mailto));
                     try {
-                        mainActivity.startActivity(emailIntent);
-                        Toast toastError = new Toast(mainActivity.getApplicationContext());
-                        toastError.setText("Testing!");
-                        toastError.setDuration(Toast.LENGTH_LONG);
-                        toastError.show();
+                        context.startActivity(emailIntent);
                     } catch (ActivityNotFoundException e) {
-                        Toast toastError = new Toast(mainActivity.getApplicationContext());
-                        toastError.setText("Could not parse email details to external mail service!");
-                        toastError.setDuration(Toast.LENGTH_LONG);
-                        toastError.show();
+                        Toast.makeText(context, "Could not parse email details to external mail service!", Toast.LENGTH_LONG).show();
                     }
                 }
             });
-
-            ImageButton makeFavorite = (ImageButton) itemView.findViewById(R.id.email_icon);
-            makeFavorite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO : Pass Implicit Intent
-                }
-            });
-
         }
-
-
     }
 }

@@ -20,6 +20,9 @@ import com.angel266489.fortuneteller.database.WishDatabase;
 
 import java.util.Random;
 
+// Thanks for the tutorials and inspiration for some of the code from the user https://github.com/haroon47 for the fun roulette :D.
+// All credits go to their respective owners.
+
 public class RouletteActivity extends AppCompatActivity implements Animation.AnimationListener {
 
     private boolean blnButtonRotation = true;
@@ -220,15 +223,13 @@ public class RouletteActivity extends AppCompatActivity implements Animation.Ani
         }
     }
 
-
     class SaveWishAsyncTask extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... wishes) {
-            Wish wish = new Wish(wishes[0], email, false);
+            Wish wish = new Wish(wishes[0], email);
             db.wishDAO().insert(wish);
             return null;
         }
     }
-
 }

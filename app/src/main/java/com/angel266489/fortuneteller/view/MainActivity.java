@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +27,13 @@ import com.angel266489.fortuneteller.database.WishDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static com.angel266489.fortuneteller.view.LoginActivity.KEY_EMAIL;
+import static com.angel266489.fortuneteller.view.LoginActivity.KEY_FIRSTNAME;
+import static com.angel266489.fortuneteller.view.LoginActivity.KEY_LASTNAME;
 
-// Thanks for the tutorials and inspiration for some of the code from the user https://github.com/haroon47 for the fun roulette :D.
-// All credits go to their respective owners.
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,11 +45,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private WishDatabase db;
     private RecyclerView recyclerView;
     private ListAdapter adapter;
+    private Button clearButton;
     private String email;
     private String firstName;
     private String lastName;
     private String mergedName;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open, R.string.close);
@@ -84,17 +85,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView userLoggedIn = headerView.findViewById(R.id.userLoggedIn);
         TextView userEmail = headerView.findViewById(R.id.userEmail);
 
+        clearButton = findViewById(R.id.clearBtn);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DeleteAllAsyncTask().execute();
+            }
+        });
+
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey(LoginActivity.KEY_FIRSTNAME)) {
-            firstName = bundle.getString(LoginActivity.KEY_FIRSTNAME);
-            lastName = bundle.getString(LoginActivity.KEY_LASTNAME);
-            email = bundle.getString(LoginActivity.KEY_EMAIL);
+        if (bundle != null && bundle.containsKey(KEY_FIRSTNAME)) {
+            firstName = bundle.getString(KEY_FIRSTNAME);
+            lastName = bundle.getString(KEY_LASTNAME);
+            email = bundle.getString(KEY_EMAIL);
             mergedName = firstName + " " + lastName;
             userLoggedIn.setText(mergedName);
 
-            String email = bundle.getString(LoginActivity.KEY_EMAIL);
+            String email = bundle.getString(KEY_EMAIL);
             userEmail.setText(email);
-
+            adapter.setEmail(email);
         } else {
             userLoggedIn.setText("Could not get user");
             userEmail.setText("Could not get email");
@@ -118,13 +127,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == RC_SIGN_IN) {
-            String returnValue = data.getExtras().getString(LoginActivity.KEY_EMAIL);
+            String returnValue = data.getExtras().getString(KEY_EMAIL);
             Toast.makeText(this, "Logged in as: " + returnValue, Toast.LENGTH_LONG).show();
         }
     }
@@ -134,13 +142,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 Intent intentHome = new Intent(this, MainActivity.class);
+                intentHome.putExtra(KEY_FIRSTNAME, firstName);
+                intentHome.putExtra(KEY_LASTNAME, lastName);
+                intentHome.putExtra(KEY_EMAIL, email);
                 finish();
                 startActivity(intentHome);
                 return true;
 
             case R.id.wheel:
                 Intent intentWheel = new Intent(this, RouletteActivity.class);
-                intentWheel.putExtra(LoginActivity.KEY_EMAIL, email);
+                intentWheel.putExtra(KEY_EMAIL, email);
                 startActivity(intentWheel);
                 return true;
 
@@ -157,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new GetAllWishesAsyncTask().execute();
     }
 
-
     class GetAllWishesAsyncTask extends AsyncTask<Void, Void, Void>{
 
         @Override
@@ -173,42 +183,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
 
-
             Log.d("db", "Inserted" + wishes);
 
             return null;
         }
     }
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void>{
 
-    public String getFirstName() {
-        return firstName;
-    }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dao = db.wishDAO();
+            dao.deleteAll();
+            runOnUiThread(new Runnable() {
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+                @Override
+                public void run() {
+                    adapter.setWishes(Collections.EMPTY_LIST);
+                }
+            });
 
-    public String getLastName() {
-        return lastName;
-    }
+            Log.d("db", "Deleted" + wishes);
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+            return null;
+        }
     }
-
-    public String getMergedName() {
-        return mergedName;
-    }
-
-    public void setMergedName(String mergedName) {
-        this.mergedName = mergedName;
-    }
-
 }
